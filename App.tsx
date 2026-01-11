@@ -1,7 +1,8 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {AppNavigator} from './src/navigation/AppNavigator';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const App = () => {
   return (

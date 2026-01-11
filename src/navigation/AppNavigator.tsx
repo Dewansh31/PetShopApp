@@ -20,11 +20,11 @@ export const AppNavigator = () => {
           headerTitleStyle: {
             fontWeight: '700',
           },
+          headerShown: false
         }}>
         <Stack.Screen
           name="PetList"
           component={PetListScreen}
-          options={{headerShown: false}}
         />
         <Stack.Screen
           name="AddPet"

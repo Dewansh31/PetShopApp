@@ -12,6 +12,7 @@ import {useCartStore} from '../store/cartStore';
 import {Pet} from '../types';
 import { showToast } from '../utils/Toast';
 import Colors from '../utils/colors';
+import { CustomHeader } from '../components/CustomHeader';
 
 export const PetListScreen = ({navigation}: any) => {
   const pets = usePetStore(state => state.pets);
@@ -26,19 +27,24 @@ export const PetListScreen = ({navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Pet Shop</Text>
-        <TouchableOpacity
-          style={styles.cartButton}
-          onPress={() => navigation.navigate('Cart')}>
-          <Text style={styles.cartIcon}>🛒</Text>
-          {itemCount > 0 && (
-            <View style={styles.badge}>
-              <Text style={styles.badgeText}>{itemCount}</Text>
-            </View>
-          )}
-        </TouchableOpacity>
-      </View>
+      
+      <CustomHeader
+        title="Pet Shop"
+        showBackButton={false}
+        onBackPress={() => { }}
+        rightIcon={
+          <View style={styles.cartButton}>
+            <Text style={styles.cartIcon}>🛒</Text>
+            {itemCount > 0 && (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{itemCount}</Text>
+              </View>
+            )}
+          </View>
+        }
+        onRightPress={() => navigation.navigate('Cart')}
+        subtitle={""}
+      />
 
       {pets.length === 0 ? (
         <View style={styles.emptyContainer}>

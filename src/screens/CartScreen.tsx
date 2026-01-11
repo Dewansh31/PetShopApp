@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {CartItem} from '../components/CartItem';
-import {Button} from '../components/Button';
-import {useCartStore} from '../store/cartStore';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { CartItem } from '../components/CartItem';
+import { Button } from '../components/Button';
+import { useCartStore } from '../store/cartStore';
 import { showToast } from '../utils/Toast';
 import Colors from '../utils/colors';
+import { CustomHeader } from '../components/CustomHeader';
 
-export const CartScreen = () => {
+export const CartScreen = (props: any) => {
   const items = useCartStore(state => state.items);
   const removeFromCart = useCartStore(state => state.removeFromCart);
   const clearCart = useCartStore(state => state.clearCart);
@@ -24,43 +25,61 @@ export const CartScreen = () => {
 
   const totalPrice = getTotalPrice().toFixed(2);
 
-  if (items.length === 0) {
-    return (
-      <View style={styles.emptyContainer}>
-        <Text style={styles.emptyIcon}>🛒</Text>
-        <Text style={styles.emptyText}>Your cart is empty</Text>
-        <Text style={styles.emptySubtext}>
-          Add some pets to get started!
-        </Text>
-      </View>
-    );
-  }
+
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={items}
-        renderItem={({item}) => (
-          <CartItem item={item} onRemove={handleRemove} />
-        )}
-        keyExtractor={item => item.id}
-        contentContainerStyle={styles.listContent}
-        showsVerticalScrollIndicator={false}
+    <>
+      <CustomHeader
+        title="Shopping Cart"
+        showBackButton={true}
+        onBackPress={() => { props.navigation.goBack(); }}
+        rightIcon={null}
+        onRightPress={() => { }}
+        subtitle={""}
       />
 
-      <View style={styles.footer}>
-        <View style={styles.totalSection}>
-          <Text style={styles.totalLabel}>Total:</Text>
-          <Text style={styles.totalPrice}>${totalPrice}</Text>
-        </View>
-        <Button
-          title="Clear Cart"
-          onPress={handleClearCart}
-          variant="danger"
-          style={styles.clearButton}
-        />
-      </View>
-    </View>
+      {
+        items.length === 0 ?
+
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyIcon}>🛒</Text>
+            <Text style={styles.emptyText}>Your cart is empty</Text>
+            <Text style={styles.emptySubtext}>
+              Add some pets to get started!
+            </Text>
+          </View>
+          :
+
+
+
+          <View style={styles.container}>
+
+
+            <FlatList
+              data={items}
+              renderItem={({ item }) => (
+                <CartItem item={item} onRemove={handleRemove} />
+              )}
+              keyExtractor={item => item.id}
+              contentContainerStyle={styles.listContent}
+              showsVerticalScrollIndicator={false}
+            />
+
+            <View style={styles.footer}>
+              <View style={styles.totalSection}>
+                <Text style={styles.totalLabel}>Total:</Text>
+                <Text style={styles.totalPrice}>${totalPrice}</Text>
+              </View>
+              <Button
+                title="Clear Cart"
+                onPress={handleClearCart}
+                variant="danger"
+                style={styles.clearButton}
+              />
+            </View>
+          </View>
+      }
+    </>
   );
 };
 
@@ -99,7 +118,7 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.border,
     elevation: 4,
     shadowColor: Colors.shadow,
-    shadowOffset: {width: 0, height: -2},
+    shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },

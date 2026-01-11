@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,17 +8,18 @@ import {
   Text,
   Alert,
 } from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {Input} from '../components/Input';
-import {Button} from '../components/Button';
-import {submitPetDetails, fetchRandomDogImage} from '../api/petService';
-import {petFormSchema} from '../utils/validation';
-import {usePetStore} from '../store/petStore';
-import {Pet} from '../types';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { Input } from '../components/Input';
+import { Button } from '../components/Button';
+import { submitPetDetails, fetchRandomDogImage } from '../api/petService';
+import { petFormSchema } from '../utils/validation';
+import { usePetStore } from '../store/petStore';
+import { Pet } from '../types';
 import { showToast } from '../utils/Toast';
 import Colors from '../utils/colors';
+import { CustomHeader } from '../components/CustomHeader';
 
-export const AddPetScreen = ({navigation}: any) => {
+export const AddPetScreen = ({ navigation }: any) => {
   const [formData, setFormData] = useState({
     name: '',
     breed: '',
@@ -29,7 +30,7 @@ export const AddPetScreen = ({navigation}: any) => {
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
   const [fetchingImage, setFetchingImage] = useState(false);
-  
+
   const addPet = usePetStore(state => state.addPet);
 
   const handleImagePicker = () => {
@@ -37,10 +38,10 @@ export const AddPetScreen = ({navigation}: any) => {
       {
         text: 'Camera',
         onPress: () => {
-          launchCamera({mediaType: 'photo', quality: 0.7}, response => {
+          launchCamera({ mediaType: 'photo', quality: 0.7 }, response => {
             if (response.assets && response.assets[0].uri) {
-              setFormData({...formData, image: response.assets[0].uri});
-              setErrors({...errors, image: ''});
+              setFormData({ ...formData, image: response.assets[0].uri });
+              setErrors({ ...errors, image: '' });
             }
           });
         },
@@ -48,15 +49,15 @@ export const AddPetScreen = ({navigation}: any) => {
       {
         text: 'Gallery',
         onPress: () => {
-          launchImageLibrary({mediaType: 'photo', quality: 0.7}, response => {
+          launchImageLibrary({ mediaType: 'photo', quality: 0.7 }, response => {
             if (response.assets && response.assets[0].uri) {
-              setFormData({...formData, image: response.assets[0].uri});
-              setErrors({...errors, image: ''});
+              setFormData({ ...formData, image: response.assets[0].uri });
+              setErrors({ ...errors, image: '' });
             }
           });
         },
       },
-      {text: 'Cancel', style: 'cancel'},
+      { text: 'Cancel', style: 'cancel' },
     ]);
   };
 
@@ -64,8 +65,8 @@ export const AddPetScreen = ({navigation}: any) => {
     setFetchingImage(true);
     try {
       const imageUrl = await fetchRandomDogImage();
-      setFormData({...formData, image: imageUrl});
-      setErrors({...errors, image: ''});
+      setFormData({ ...formData, image: imageUrl });
+      setErrors({ ...errors, image: '' });
 
       showToast('success', 'Success', 'Random dog image loaded!');
     } catch (error) {
@@ -78,7 +79,7 @@ export const AddPetScreen = ({navigation}: any) => {
 
   const handleSubmit = async () => {
     try {
-      await petFormSchema.validate(formData, {abortEarly: false});
+      await petFormSchema.validate(formData, { abortEarly: false });
       setErrors({});
       setLoading(true);
 
@@ -93,7 +94,7 @@ export const AddPetScreen = ({navigation}: any) => {
 
       showToast('success', 'Success', 'Pet added successfully!');
 
-      setFormData({name: '', breed: '', age: '', price: '', image: ''});
+      setFormData({ name: '', breed: '', age: '', price: '', image: '' });
       navigation.navigate('PetList');
     } catch (error: any) {
       if (error.inner) {
@@ -111,76 +112,88 @@ export const AddPetScreen = ({navigation}: any) => {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Add New Pet</Text>
 
-        <View style={styles.imageSection}>
-          {formData.image ? (
-            <TouchableOpacity onPress={handleImagePicker}>
-              <Image source={{uri: formData.image}} style={styles.imagePreview} />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity
-              style={styles.imagePlaceholder}
-              onPress={handleImagePicker}>
-              <Text style={styles.imagePlaceholderText}>📷</Text>
-              <Text style={styles.imagePlaceholderSubtext}>Tap to select</Text>
-            </TouchableOpacity>
-          )}
-          {errors.image && <Text style={styles.errorText}>{errors.image}</Text>}
-          
+    <>
+
+      <CustomHeader
+        title="Add Pet"
+        showBackButton={true}
+        onBackPress={() => { navigation.goBack(); }}
+        rightIcon={null}
+        onRightPress={() => { }}
+        subtitle={""}
+      />
+
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
+
+          <View style={styles.imageSection}>
+            {formData.image ? (
+              <TouchableOpacity onPress={handleImagePicker}>
+                <Image source={{ uri: formData.image }} style={styles.imagePreview} />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={styles.imagePlaceholder}
+                onPress={handleImagePicker}>
+                <Text style={styles.imagePlaceholderText}>📷</Text>
+                <Text style={styles.imagePlaceholderSubtext}>Tap to select</Text>
+              </TouchableOpacity>
+            )}
+            {errors.image && <Text style={styles.errorText}>{errors.image}</Text>}
+
+            <Button
+              title="Fetch Random Dog"
+              onPress={handleFetchRandomImage}
+              loading={fetchingImage}
+              variant="secondary"
+              style={styles.randomButton}
+            />
+          </View>
+
+          <Input
+            label="Pet Name"
+            value={formData.name}
+            onChangeText={text => setFormData({ ...formData, name: text })}
+            placeholder="e.g., Max"
+            error={errors.name}
+          />
+
+          <Input
+            label="Breed"
+            value={formData.breed}
+            onChangeText={text => setFormData({ ...formData, breed: text })}
+            placeholder="e.g., Golden Retriever"
+            error={errors.breed}
+          />
+
+          <Input
+            label="Age (years)"
+            value={formData.age}
+            onChangeText={text => setFormData({ ...formData, age: text })}
+            placeholder="e.g., 3"
+            keyboardType="numeric"
+            error={errors.age}
+          />
+
+          <Input
+            label="Price ($)"
+            value={formData.price}
+            onChangeText={text => setFormData({ ...formData, price: text })}
+            placeholder="e.g., 500"
+            keyboardType="numeric"
+            error={errors.price}
+          />
+
           <Button
-            title="Fetch Random Dog"
-            onPress={handleFetchRandomImage}
-            loading={fetchingImage}
-            variant="secondary"
-            style={styles.randomButton}
+            title="Add Pet"
+            onPress={handleSubmit}
+            loading={loading}
+            style={styles.submitButton}
           />
         </View>
-
-        <Input
-          label="Pet Name"
-          value={formData.name}
-          onChangeText={text => setFormData({...formData, name: text})}
-          placeholder="e.g., Max"
-          error={errors.name}
-        />
-
-        <Input
-          label="Breed"
-          value={formData.breed}
-          onChangeText={text => setFormData({...formData, breed: text})}
-          placeholder="e.g., Golden Retriever"
-          error={errors.breed}
-        />
-
-        <Input
-          label="Age (years)"
-          value={formData.age}
-          onChangeText={text => setFormData({...formData, age: text})}
-          placeholder="e.g., 3"
-          keyboardType="numeric"
-          error={errors.age}
-        />
-
-        <Input
-          label="Price ($)"
-          value={formData.price}
-          onChangeText={text => setFormData({...formData, price: text})}
-          placeholder="e.g., 500"
-          keyboardType="numeric"
-          error={errors.price}
-        />
-
-        <Button
-          title="Add Pet"
-          onPress={handleSubmit}
-          loading={loading}
-          style={styles.submitButton}
-        />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 
