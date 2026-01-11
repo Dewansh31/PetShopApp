@@ -27,22 +27,16 @@ export const CustomHeader: React.FC<CustomHeaderProps> = ({
 }) => {
     return (
         <>
-            <StatusBar
-                barStyle="light-content"
-                backgroundColor={Colors.primary}
-                translucent={false}
-            />
             <View style={styles.header}>
                 <View style={styles.headerContent}>
-                    {showBackButton ? (
+                    
+                    {showBackButton && (
                         <TouchableOpacity
                             style={styles.backButton}
                             onPress={onBackPress}
                             activeOpacity={0.7}>
                             <Text style={styles.backIcon}>←</Text>
                         </TouchableOpacity>
-                    ) : (
-                        <View style={styles.leftSpacer} />
                     )}
 
                     <View style={styles.titleContainer}>
@@ -68,12 +62,7 @@ export const CustomHeader: React.FC<CustomHeaderProps> = ({
                     )}
                 </View>
 
-                {/* Decorative paw prints */}
-                <View style={styles.pawContainer}>
-                    <Text style={styles.pawPrint}>🐾</Text>
-                    <Text style={[styles.pawPrint, styles.pawPrint2]}>🐾</Text>
-                    <Text style={[styles.pawPrint, styles.pawPrint3]}>🐾</Text>
-                </View>
+                
             </View>
         </>
     );
@@ -81,7 +70,7 @@ export const CustomHeader: React.FC<CustomHeaderProps> = ({
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: Colors.primary,
+        backgroundColor: Colors.background,
         paddingTop: 12,
         paddingBottom: 16,
         paddingHorizontal: 16,
@@ -109,7 +98,7 @@ const styles = StyleSheet.create({
     },
     backIcon: {
         fontSize: 24,
-        color: Colors.textInverse,
+        color: Colors.textPrimary,
         fontWeight: '600',
     },
     leftSpacer: {
@@ -117,21 +106,21 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'flex-start',
         marginHorizontal: 8,
     },
     title: {
         fontSize: 24,
         fontWeight: '700',
-        color: Colors.textInverse,
-        textAlign: 'center',
+        color: Colors.textPrimary,
+        textAlign: 'left',
         letterSpacing: 0.5,
     },
     subtitle: {
         fontSize: 12,
         color: 'rgba(255, 255, 255, 0.85)',
         marginTop: 2,
-        textAlign: 'center',
+        textAlign: 'left',
     },
     rightButton: {
         width: 40,
