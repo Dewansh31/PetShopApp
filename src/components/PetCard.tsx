@@ -22,14 +22,16 @@ export const PetCard: React.FC<PetCardProps> = ({ pet, onAddToCart, isInCart = f
   return (
     <View style={styles.card}>
 
-      <View style={styles.imageContainer}>
-        <Image source={{ uri: pet.image }} style={styles.image} />
-        {isInCart && (
+      {isInCart && (
           <View style={styles.cartBadge}>
             <Text style={styles.cartBadgeText}>🛒</Text>
           </View>
         )}
+
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: pet.image }} style={styles.image} />
       </View>
+
       <View style={styles.content}>
 
         <View style={{ gap: 4 }}>
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
     color: Colors.textSecondary,
   },
   price: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '700',
     color: Colors.primary,
   },
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: Colors.success,
+    backgroundColor: Colors.surface,
     borderRadius: 20,
     width: 32,
     height: 32,
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 4,
     shadowColor: Colors.shadow,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 3, height: 5 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
