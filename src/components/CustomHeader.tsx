@@ -29,7 +29,7 @@ export const CustomHeader: React.FC<CustomHeaderProps> = ({
         <>
             <View style={styles.header}>
                 <View style={styles.headerContent}>
-                    
+
                     {showBackButton && (
                         <TouchableOpacity
                             style={styles.backButton}
@@ -62,7 +62,7 @@ export const CustomHeader: React.FC<CustomHeaderProps> = ({
                     )}
                 </View>
 
-                
+
             </View>
         </>
     );

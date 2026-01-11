@@ -38,8 +38,8 @@ export const CartScreen = (props: any) => {
 
       {
         items.length === 0 ?
-
           <View style={styles.emptyContainer}>
+            {/* Empty State */}
             <Text style={styles.emptyIcon}>🛒</Text>
             <Text style={styles.emptyText}>Your cart is empty</Text>
             <Text style={styles.emptySubtext}>
@@ -48,11 +48,8 @@ export const CartScreen = (props: any) => {
           </View>
           :
 
-
-
           <View style={styles.container}>
-
-
+            {/* Main view */}
             <FlatList
               data={items}
               renderItem={({ item }) => (

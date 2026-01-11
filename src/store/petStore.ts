@@ -1,5 +1,5 @@
-import {create} from 'zustand';
-import {Pet} from '../types';
+import { create } from 'zustand';
+import { Pet } from '../types';
 
 interface PetState {
   pets: Pet[];
@@ -13,5 +13,5 @@ export const usePetStore = create<PetState>(set => ({
     set(state => ({
       pets: [pet, ...state.pets],
     })),
-  setPets: (pets: Pet[]) => set({pets}),
+  setPets: (pets: Pet[]) => set({ pets }),
 }));

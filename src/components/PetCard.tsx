@@ -16,17 +16,15 @@ interface PetCardProps {
   isInCart?: boolean;
 }
 
-const { width } = Dimensions.get('window');
-
 export const PetCard: React.FC<PetCardProps> = ({ pet, onAddToCart, isInCart = false }) => {
   return (
     <View style={styles.card}>
 
       {isInCart && (
-          <View style={styles.cartBadge}>
-            <Text style={styles.cartBadgeText}>🛒</Text>
-          </View>
-        )}
+        <View style={styles.cartBadge}>
+          <Text style={styles.cartBadgeText}>🛒</Text>
+        </View>
+      )}
 
       <View style={styles.imageContainer}>
         <Image source={{ uri: pet.image }} style={styles.image} />

@@ -6,15 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {PetCard} from '../components/PetCard';
-import {usePetStore} from '../store/petStore';
-import {useCartStore} from '../store/cartStore';
-import {Pet} from '../types';
+import { PetCard } from '../components/PetCard';
+import { usePetStore } from '../store/petStore';
+import { useCartStore } from '../store/cartStore';
+import { Pet } from '../types';
 import { showToast } from '../utils/Toast';
 import Colors from '../utils/colors';
 import { CustomHeader } from '../components/CustomHeader';
 
-export const PetListScreen = ({navigation}: any) => {
+export const PetListScreen = ({ navigation }: any) => {
   const pets = usePetStore(state => state.pets);
   const addToCart = useCartStore(state => state.addToCart);
   const cartItems = useCartStore(state => state.items);
@@ -27,7 +27,7 @@ export const PetListScreen = ({navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      
+
       <CustomHeader
         title="Pet Shop"
         showBackButton={false}
@@ -57,9 +57,9 @@ export const PetListScreen = ({navigation}: any) => {
       ) : (
         <FlatList
           data={pets}
-          renderItem={({item}) => (
-            <PetCard 
-              pet={item} 
+          renderItem={({ item }) => (
+            <PetCard
+              pet={item}
               onAddToCart={handleAddToCart}
               isInCart={cartItems.some(cartItem => cartItem.id === item.id)}
             />
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.surface,
     elevation: 2,
     shadowColor: Colors.shadow,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 4,
     shadowColor: Colors.shadow,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },

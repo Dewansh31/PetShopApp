@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import {CartItem as CartItemType} from '../types';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { CartItem as CartItemType } from '../types';
 import Colors from '../utils/colors';
 
 interface CartItemProps {
@@ -8,12 +8,12 @@ interface CartItemProps {
   onRemove: (id: string) => void;
 }
 
-export const CartItem: React.FC<CartItemProps> = ({item, onRemove}) => {
+export const CartItem: React.FC<CartItemProps> = ({ item, onRemove }) => {
   const totalPrice = (parseFloat(item.price) * item.quantity).toFixed(2);
 
   return (
     <View style={styles.container}>
-      <Image source={{uri: item.image}} style={styles.image} />
+      <Image source={{ uri: item.image }} style={styles.image} />
       <View style={styles.details}>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.breed}>{item.breed}</Text>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     elevation: 2,
     shadowColor: Colors.shadow,
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },

@@ -72,10 +72,8 @@ export const AddPetScreen = ({ navigation }: any) => {
       const imageUrl = await fetchRandomDogImage();
       setFormData({ ...formData, image: imageUrl });
       setErrors({ ...errors, image: '' });
-
       showToast('success', 'Success', 'Random dog image loaded!');
     } catch (error) {
-
       showToast('error', 'Error', 'Failed to fetch image');
     } finally {
       setFetchingImage(false);
@@ -96,9 +94,7 @@ export const AddPetScreen = ({ navigation }: any) => {
       };
 
       addPet(newPet);
-
       showToast('success', 'Success', 'Pet added successfully!');
-
       setFormData({ name: '', breed: '', age: '', price: '', image: '' });
       navigation.navigate('PetList');
     } catch (error: any) {
@@ -117,9 +113,7 @@ export const AddPetScreen = ({ navigation }: any) => {
   };
 
   return (
-
     <>
-
       <CustomHeader
         title="Add Pet"
         showBackButton={true}
@@ -133,18 +127,24 @@ export const AddPetScreen = ({ navigation }: any) => {
         <View style={styles.content}>
 
           <View style={styles.imageSection}>
-            {formData.image ? (
-              <TouchableOpacity onPress={handleImagePicker}>
-                <Image source={{ uri: formData.image }} style={styles.imagePreview} />
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.imagePlaceholder}
-                onPress={handleImagePicker}>
-                <Text style={styles.imagePlaceholderText}>📷</Text>
-                <Text style={styles.imagePlaceholderSubtext}>Tap to select</Text>
-              </TouchableOpacity>
-            )}
+            {
+              formData.image ? (
+                <TouchableOpacity onPress={handleImagePicker}>
+                  <Image source={{ uri: formData.image }} style={styles.imagePreview} />
+                </TouchableOpacity>
+              ) : (
+                fetchingImage ?
+                  <View style={styles.imagePlaceholder}>
+                    <Text style={styles.imagePlaceholderSubtext}>Loading...</Text>
+                  </View>
+                  :
+                  <TouchableOpacity
+                    style={styles.imagePlaceholder}
+                    onPress={handleImagePicker}>
+                    <Text style={styles.imagePlaceholderText}>📷</Text>
+                    <Text style={styles.imagePlaceholderSubtext}>Tap to select</Text>
+                  </TouchableOpacity>
+              )}
             {errors.image && <Text style={styles.errorText}>{errors.image}</Text>}
 
           </View>

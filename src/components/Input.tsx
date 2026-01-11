@@ -13,7 +13,7 @@ interface InputProps extends TextInputProps {
   error?: string;
 }
 
-export const Input: React.FC<InputProps> = ({label, error, ...props}) => {
+export const Input: React.FC<InputProps> = ({ label, error, ...props }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
