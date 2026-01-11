@@ -8,10 +8,10 @@ import Colors from '../utils/colors';
 import { CustomHeader } from '../components/CustomHeader';
 
 export const CartScreen = (props: any) => {
-  const items = useCartStore(state => state.items);
-  const removeFromCart = useCartStore(state => state.removeFromCart);
-  const clearCart = useCartStore(state => state.clearCart);
-  const getTotalPrice = useCartStore(state => state.getTotalPrice);
+  const items = useCartStore((state: any) => state.items);
+  const removeFromCart = useCartStore((state: any) => state.removeFromCart);
+  const clearCart = useCartStore((state: any) => state.clearCart);
+  const getTotalPrice = useCartStore((state: any) => state.getTotalPrice);
 
   const handleRemove = (id: string) => {
     removeFromCart(id);

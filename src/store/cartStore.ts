@@ -10,13 +10,14 @@ interface CartState {
   getItemCount: () => number;
 }
 
-export const useCartStore = create<CartState>(set => ({
+export const useCartStore = create<CartState>((set, get) => ({
   items: [],
 
   addToCart: (pet: Pet) =>
     set(state => {
       const existingItem = state.items.find(item => item.id === pet.id);
 
+      // If item already in cart, increase quantity
       if (existingItem) {
         return {
           items: state.items.map(item =>
@@ -27,6 +28,7 @@ export const useCartStore = create<CartState>(set => ({
         };
       }
 
+      // If item not in cart, add it with quantity 1
       return {
         items: [...state.items, { ...pet, quantity: 1 }],
       };
@@ -39,16 +41,16 @@ export const useCartStore = create<CartState>(set => ({
 
   clearCart: () => set({ items: [] }),
 
-  getTotalPrice: () => {
-    const state = useCartStore.getState();
+  getTotalPrice: (): number => {
+    const state = get();
     return state.items.reduce(
-      (total, item) => total + parseFloat(item.price) * item.quantity,
+      (total: number, item: CartItem) => total + parseFloat(item.price) * item.quantity,
       0,
     );
   },
 
-  getItemCount: () => {
-    const state = useCartStore.getState();
-    return state.items.reduce((count, item) => count + item.quantity, 0);
+  getItemCount: (): number => {
+    const state = get();
+    return state.items.reduce((count: number, item: CartItem) => count + item.quantity, 0);
   },
 }));

@@ -16,9 +16,9 @@ import { CustomHeader } from '../components/CustomHeader';
 
 export const PetListScreen = ({ navigation }: any) => {
   const pets = usePetStore(state => state.pets);
-  const addToCart = useCartStore(state => state.addToCart);
-  const cartItems = useCartStore(state => state.items);
-  const itemCount = useCartStore(state => state.getItemCount());
+  const addToCart = useCartStore((state: any) => state.addToCart);
+  const cartItems = useCartStore((state: any) => state.items);
+  const itemCount = useCartStore((state: any) => state.getItemCount());
 
   const handleAddToCart = (pet: Pet) => {
     addToCart(pet);
@@ -61,7 +61,7 @@ export const PetListScreen = ({ navigation }: any) => {
             <PetCard
               pet={item}
               onAddToCart={handleAddToCart}
-              isInCart={cartItems.some(cartItem => cartItem.id === item.id)}
+              isInCart={cartItems.some((cartItem: any) => cartItem.id === item.id)}
             />
           )}
           keyExtractor={item => item.id}
