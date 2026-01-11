@@ -15,6 +15,7 @@ import { showToast } from '../utils/Toast';
 export const PetListScreen = ({navigation}: any) => {
   const pets = usePetStore(state => state.pets);
   const addToCart = useCartStore(state => state.addToCart);
+  const cartItems = useCartStore(state => state.items);
   const itemCount = useCartStore(state => state.getItemCount());
 
   const handleAddToCart = (pet: Pet) => {
@@ -50,7 +51,11 @@ export const PetListScreen = ({navigation}: any) => {
         <FlatList
           data={pets}
           renderItem={({item}) => (
-            <PetCard pet={item} onAddToCart={handleAddToCart} />
+            <PetCard 
+              pet={item} 
+              onAddToCart={handleAddToCart}
+              isInCart={cartItems.some(cartItem => cartItem.id === item.id)}
+            />
           )}
           keyExtractor={item => item.id}
           numColumns={2}

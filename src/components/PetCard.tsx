@@ -12,15 +12,21 @@ import {Pet} from '../types';
 interface PetCardProps {
   pet: Pet;
   onAddToCart: (pet: Pet) => void;
+  isInCart?: boolean;
 }
 
 const {width} = Dimensions.get('window');
 const CARD_WIDTH = (width - 48) / 2;
 
-export const PetCard: React.FC<PetCardProps> = ({pet, onAddToCart}) => {
+export const PetCard: React.FC<PetCardProps> = ({pet, onAddToCart, isInCart = false}) => {
   return (
     <View style={styles.card}>
       <Image source={{uri: pet.image}} style={styles.image} />
+      {isInCart && (
+        <View style={styles.cartBadge}>
+          <Text style={styles.cartBadgeText}>🛒</Text>
+        </View>
+      )}
       <View style={styles.content}>
         <Text style={styles.name} numberOfLines={1}>
           {pet.name}
@@ -103,5 +109,24 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 20,
     fontWeight: '600',
+  },
+  cartBadge: {
+    position: 'absolute',
+    top: 8,
+    right: 8,
+    backgroundColor: '#4CAF50',
+    borderRadius: 20,
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  cartBadgeText: {
+    fontSize: 16,
   },
 });
