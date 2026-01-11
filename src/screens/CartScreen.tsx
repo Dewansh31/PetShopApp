@@ -4,6 +4,7 @@ import Toast from 'react-native-toast-message';
 import {CartItem} from '../components/CartItem';
 import {Button} from '../components/Button';
 import {useCartStore} from '../store/cartStore';
+import { showToast } from '../utils/Toast';
 
 export const CartScreen = () => {
   const items = useCartStore(state => state.items);
@@ -13,20 +14,12 @@ export const CartScreen = () => {
 
   const handleRemove = (id: string) => {
     removeFromCart(id);
-    Toast.show({
-      type: 'info',
-      text1: 'Removed',
-      text2: 'Item removed from cart',
-    });
+    showToast('info', 'Removed', 'Item removed from cart');
   };
 
   const handleClearCart = () => {
     clearCart();
-    Toast.show({
-      type: 'info',
-      text1: 'Cart Cleared',
-      text2: 'All items removed from cart',
-    });
+    showToast('info', 'Cart Cleared', 'All items removed from cart');
   };
 
   const totalPrice = getTotalPrice().toFixed(2);

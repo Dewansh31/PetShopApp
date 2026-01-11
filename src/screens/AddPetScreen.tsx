@@ -16,6 +16,7 @@ import {submitPetDetails, fetchRandomDogImage} from '../api/petService';
 import {petFormSchema} from '../utils/validation';
 import {usePetStore} from '../store/petStore';
 import {Pet} from '../types';
+import { showToast } from '../utils/Toast';
 
 export const AddPetScreen = ({navigation}: any) => {
   const [formData, setFormData] = useState({
@@ -65,17 +66,11 @@ export const AddPetScreen = ({navigation}: any) => {
       const imageUrl = await fetchRandomDogImage();
       setFormData({...formData, image: imageUrl});
       setErrors({...errors, image: ''});
-      Toast.show({
-        type: 'success',
-        text1: 'Success',
-        text2: 'Random dog image loaded!',
-      });
+
+      showToast('success', 'Success', 'Random dog image loaded!');
     } catch (error) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: 'Failed to fetch image',
-      });
+
+      showToast('error', 'Error', 'Failed to fetch image');
     } finally {
       setFetchingImage(false);
     }
@@ -96,11 +91,7 @@ export const AddPetScreen = ({navigation}: any) => {
 
       addPet(newPet);
 
-      Toast.show({
-        type: 'success',
-        text1: 'Success',
-        text2: 'Pet added successfully!',
-      });
+      showToast('success', 'Success', 'Pet added successfully!');
 
       setFormData({name: '', breed: '', age: '', price: '', image: ''});
       navigation.navigate('PetList');
@@ -112,11 +103,7 @@ export const AddPetScreen = ({navigation}: any) => {
         });
         setErrors(validationErrors);
       } else {
-        Toast.show({
-          type: 'error',
-          text1: 'Error',
-          text2: error.message || 'Failed to add pet',
-        });
+        showToast('error', 'Error', error.message || 'Failed to add pet');
       }
     } finally {
       setLoading(false);

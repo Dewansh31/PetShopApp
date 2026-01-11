@@ -11,6 +11,7 @@ import {PetCard} from '../components/PetCard';
 import {usePetStore} from '../store/petStore';
 import {useCartStore} from '../store/cartStore';
 import {Pet} from '../types';
+import { showToast } from '../utils/Toast';
 
 export const PetListScreen = ({navigation}: any) => {
   const pets = usePetStore(state => state.pets);
@@ -19,11 +20,7 @@ export const PetListScreen = ({navigation}: any) => {
 
   const handleAddToCart = (pet: Pet) => {
     addToCart(pet);
-    Toast.show({
-      type: 'success',
-      text1: 'Added to Cart',
-      text2: `${pet.name} has been added to your cart`,
-    });
+    showToast('success', 'Added to Cart', `${pet.name} has been added to your cart`);
   };
 
   return (
