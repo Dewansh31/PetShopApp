@@ -25,8 +25,6 @@ export const CartScreen = (props: any) => {
 
   const totalPrice = getTotalPrice().toFixed(2);
 
-
-
   return (
     <>
       <CustomHeader
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
   totalPrice: {
     fontSize: 28,
     fontWeight: '700',
-    color: Colors.primary,
+    color: Colors.textPrimary,
   },
   clearButton: {
     width: '100%',
