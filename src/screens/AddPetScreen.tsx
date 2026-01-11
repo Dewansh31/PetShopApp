@@ -1,0 +1,254 @@
+import React, {useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Text,
+  Alert,
+} from 'react-native';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import Toast from 'react-native-toast-message';
+import {Input} from '../components/Input';
+import {Button} from '../components/Button';
+import {submitPetDetails, fetchRandomDogImage} from '../api/petService';
+import {petFormSchema} from '../utils/validation';
+import {usePetStore} from '../store/petStore';
+import {Pet} from '../types';
+
+export const AddPetScreen = ({navigation}: any) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    breed: '',
+    age: '',
+    price: '',
+    image: '',
+  });
+  const [errors, setErrors] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+  const [fetchingImage, setFetchingImage] = useState(false);
+  
+  const addPet = usePetStore(state => state.addPet);
+
+  const handleImagePicker = () => {
+    Alert.alert('Select Image', 'Choose an option', [
+      {
+        text: 'Camera',
+        onPress: () => {
+          launchCamera({mediaType: 'photo', quality: 0.7}, response => {
+            if (response.assets && response.assets[0].uri) {
+              setFormData({...formData, image: response.assets[0].uri});
+              setErrors({...errors, image: ''});
+            }
+          });
+        },
+      },
+      {
+        text: 'Gallery',
+        onPress: () => {
+          launchImageLibrary({mediaType: 'photo', quality: 0.7}, response => {
+            if (response.assets && response.assets[0].uri) {
+              setFormData({...formData, image: response.assets[0].uri});
+              setErrors({...errors, image: ''});
+            }
+          });
+        },
+      },
+      {text: 'Cancel', style: 'cancel'},
+    ]);
+  };
+
+  const handleFetchRandomImage = async () => {
+    setFetchingImage(true);
+    try {
+      const imageUrl = await fetchRandomDogImage();
+      setFormData({...formData, image: imageUrl});
+      setErrors({...errors, image: ''});
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Random dog image loaded!',
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Failed to fetch image',
+      });
+    } finally {
+      setFetchingImage(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await petFormSchema.validate(formData, {abortEarly: false});
+      setErrors({});
+      setLoading(true);
+
+      await submitPetDetails(formData);
+
+      const newPet: Pet = {
+        id: Date.now().toString(),
+        ...formData,
+      };
+
+      addPet(newPet);
+
+      Toast.show({
+        type: 'success',
+        text1: 'Success',
+        text2: 'Pet added successfully!',
+      });
+
+      setFormData({name: '', breed: '', age: '', price: '', image: ''});
+      navigation.navigate('PetList');
+    } catch (error: any) {
+      if (error.inner) {
+        const validationErrors: any = {};
+        error.inner.forEach((err: any) => {
+          validationErrors[err.path] = err.message;
+        });
+        setErrors(validationErrors);
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: 'Error',
+          text2: error.message || 'Failed to add pet',
+        });
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.content}>
+        <Text style={styles.title}>Add New Pet</Text>
+
+        <View style={styles.imageSection}>
+          {formData.image ? (
+            <TouchableOpacity onPress={handleImagePicker}>
+              <Image source={{uri: formData.image}} style={styles.imagePreview} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.imagePlaceholder}
+              onPress={handleImagePicker}>
+              <Text style={styles.imagePlaceholderText}>📷</Text>
+              <Text style={styles.imagePlaceholderSubtext}>Tap to select</Text>
+            </TouchableOpacity>
+          )}
+          {errors.image && <Text style={styles.errorText}>{errors.image}</Text>}
+          
+          <Button
+            title="Fetch Random Dog"
+            onPress={handleFetchRandomImage}
+            loading={fetchingImage}
+            variant="secondary"
+            style={styles.randomButton}
+          />
+        </View>
+
+        <Input
+          label="Pet Name"
+          value={formData.name}
+          onChangeText={text => setFormData({...formData, name: text})}
+          placeholder="e.g., Max"
+          error={errors.name}
+        />
+
+        <Input
+          label="Breed"
+          value={formData.breed}
+          onChangeText={text => setFormData({...formData, breed: text})}
+          placeholder="e.g., Golden Retriever"
+          error={errors.breed}
+        />
+
+        <Input
+          label="Age (years)"
+          value={formData.age}
+          onChangeText={text => setFormData({...formData, age: text})}
+          placeholder="e.g., 3"
+          keyboardType="numeric"
+          error={errors.age}
+        />
+
+        <Input
+          label="Price ($)"
+          value={formData.price}
+          onChangeText={text => setFormData({...formData, price: text})}
+          placeholder="e.g., 500"
+          keyboardType="numeric"
+          error={errors.price}
+        />
+
+        <Button
+          title="Add Pet"
+          onPress={handleSubmit}
+          loading={loading}
+          style={styles.submitButton}
+        />
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F9F9F9',
+  },
+  content: {
+    padding: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 24,
+  },
+  imageSection: {
+    marginBottom: 24,
+  },
+  imagePreview: {
+    width: '100%',
+    height: 200,
+    borderRadius: 16,
+    backgroundColor: '#F5F5F5',
+  },
+  imagePlaceholder: {
+    width: '100%',
+    height: 200,
+    borderRadius: 16,
+    backgroundColor: '#F5F5F5',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: '#E0E0E0',
+    borderStyle: 'dashed',
+  },
+  imagePlaceholderText: {
+    fontSize: 48,
+  },
+  imagePlaceholderSubtext: {
+    fontSize: 14,
+    color: '#999',
+    marginTop: 8,
+  },
+  randomButton: {
+    marginTop: 12,
+  },
+  errorText: {
+    color: '#FF4757',
+    fontSize: 12,
+    marginTop: 4,
+  },
+  submitButton: {
+    marginTop: 8,
+    marginBottom: 40,
+  },
+});

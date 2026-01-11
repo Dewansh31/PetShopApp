@@ -1,97 +1,225 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# 🐾 Pet Shop Mobile Application
 
-# Getting Started
+A feature-rich React Native mobile application for managing a pet shop with image upload, form validation, API integration, and cart management.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 📱 Features
 
-## Step 1: Start Metro
+- **Pet Image Upload**: Capture from camera or select from gallery
+- **Random Pet Image**: Fetch random dog images from API
+- **Form Validation**: Comprehensive validation using Yup
+- **Pet Listing**: Beautiful card-based grid layout
+- **Shopping Cart**: Add/remove items with quantity management
+- **State Management**: Global state using Zustand
+- **Toast Notifications**: User-friendly feedback
+- **TypeScript**: Full type safety
+- **Modern UI**: Clean, intuitive design with smooth animations
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 🛠 Tech Stack
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- **Framework**: React Native CLI with TypeScript
+- **State Management**: Zustand
+- **Navigation**: React Navigation v6
+- **Form Validation**: Yup
+- **HTTP Client**: Axios
+- **Image Picker**: react-native-image-picker
+- **Notifications**: react-native-toast-message
+- **Animations**: React Native Reanimated & Gesture Handler
 
-```sh
-# Using npm
-npm start
+## 📋 Prerequisites
 
-# OR using Yarn
-yarn start
+- Node.js >= 18
+- React Native CLI
+- Android Studio (for Android development)
+- Xcode (for iOS development on macOS)
+- JDK 17 or newer
+
+## 🚀 Installation & Setup
+
+### 1. Clone the repository
+```bash
+git clone <your-repo-url>
+cd PetShopApp
 ```
 
-## Step 2: Build and run your app
+### 2. Install dependencies
+```bash
+npm install
+```
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### 3. Install iOS dependencies (macOS only)
+```bash
+cd ios && pod install && cd ..
+```
 
-### Android
+### 4. Run the application
 
-```sh
-# Using npm
+**For Android:**
+```bash
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+**For iOS:**
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 🏗 Project Structure
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```
+PetShopApp/
+├── src/
+│   ├── api/
+│   │   └── petService.ts          # API integration
+│   ├── components/
+│   │   ├── Button.tsx             # Reusable button component
+│   │   ├── Input.tsx              # Reusable input component
+│   │   ├── PetCard.tsx            # Pet listing card
+│   │   └── CartItem.tsx           # Cart item component
+│   ├── navigation/
+│   │   └── AppNavigator.tsx       # Navigation configuration
+│   ├── screens/
+│   │   ├── AddPetScreen.tsx       # Add new pet screen
+│   │   ├── PetListScreen.tsx      # Pet listing screen
+│   │   └── CartScreen.tsx         # Shopping cart screen
+│   ├── store/
+│   │   ├── cartStore.ts           # Cart state management
+│   │   └── petStore.ts            # Pet state management
+│   ├── types/
+│   │   └── index.ts               # TypeScript types
+│   └── utils/
+│       └── validation.ts          # Form validation schemas
+├── App.tsx                        # Root component
+└── README.md                      # Documentation
+```
 
-## Step 3: Modify your app
+## 🔌 API Endpoints Used
 
-Now that you have successfully run the app, let's make changes!
+1. **Submit Pet Details**
+   - **URL**: `https://reqres.in/api/users`
+   - **Method**: POST
+   - **Purpose**: Submit new pet information
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+2. **Random Dog Image**
+   - **URL**: `https://dog.ceo/api/breeds/image/random`
+   - **Method**: GET
+   - **Purpose**: Fetch random dog images
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+> **Note**: ReqRes is used as a mock API for demonstration. In production, this would be replaced with an actual backend API.
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## 🎨 Key Features Explained
 
-## Congratulations! :tada:
+### State Management with Zustand
 
-You've successfully run and modified your React Native App. :partying_face:
+- **cartStore**: Manages shopping cart items, quantities, and totals
+- **petStore**: Manages the list of pets
 
-### Now what?
+### Form Validation
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+All pet form fields are validated using Yup:
+- Name: Required, minimum 2 characters
+- Breed: Required, minimum 2 characters
+- Age: Required, must be numeric
+- Price: Required, must be valid decimal number
+- Image: Required
 
-# Troubleshooting
+### Image Handling
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+Users can:
+1. Capture images using device camera
+2. Select images from gallery
+3. Fetch random dog images from API
+4. Preview images before submission
 
-# Learn More
+### Shopping Cart
 
-To learn more about React Native, take a look at the following resources:
+Features include:
+- Add pets to cart
+- Automatic quantity increment for duplicate items
+- Remove items from cart
+- Real-time total calculation
+- Clear entire cart
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## 📸 Screenshots
+
+(Add screenshots of your app here)
+
+## 🧪 Testing
+
+The application handles:
+- ✅ Loading states during API calls
+- ✅ Error handling with user-friendly messages
+- ✅ Form validation with inline error messages
+- ✅ Network failure scenarios
+- ✅ Empty states for lists
+
+## 🎯 Assignment Requirements Checklist
+
+- [x] Pet Image Upload (Camera/Gallery)
+- [x] Image preview before submission
+- [x] Form validation (Yup)
+- [x] Required fields: Name, Breed, Age, Price
+- [x] Submit to mock API (POST)
+- [x] Handle loading/error/success states
+- [x] Fetch random pet image (GET)
+- [x] Pet listing with cards
+- [x] Cart functionality (Add/Remove/View/Total)
+- [x] Global state management (Zustand)
+- [x] TypeScript implementation
+- [x] Reusable components
+- [x] Toast notifications
+- [x] Modern UI design
+- [x] Error handling
+- [x] Loading indicators
+
+## 🔧 Troubleshooting
+
+### Android Build Issues
+```bash
+cd android && ./gradlew clean && cd ..
+npm run android
+```
+
+### iOS Build Issues
+```bash
+cd ios && pod deintegrate && pod install && cd ..
+npm run ios
+```
+
+### Metro Bundler Issues
+```bash
+npm start -- --reset-cache
+```
+
+## 📦 Third-Party Libraries
+
+| Library | Purpose | Justification |
+|---------|---------|---------------|
+| zustand | State Management | Lightweight, minimal boilerplate, excellent TypeScript support |
+| react-navigation | Navigation | Industry standard for React Native navigation |
+| axios | HTTP Client | Robust API client with interceptors and better error handling |
+| yup | Validation | Popular, declarative validation with great TypeScript support |
+| react-native-image-picker | Image Selection | Native module for camera/gallery access |
+| react-native-toast-message | Notifications | Beautiful, customizable toast notifications |
+| react-native-reanimated | Animations | Performant animations running on native thread |
+
+## 👨‍💻 Development Guidelines
+
+- Follow TypeScript best practices
+- Use functional components with hooks
+- Implement proper error boundaries
+- Keep components small and reusable
+- Follow React Native performance best practices
+- Use meaningful variable and function names
+- Add comments for complex logic
+
+## 📝 License
+
+This project is created for assignment purposes.
+
+## 🤝 Contributing
+
+This is an assignment project, but suggestions are welcome!
+
+---
+
+**Built with ❤️ using React Native**
