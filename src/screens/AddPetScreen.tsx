@@ -9,7 +9,6 @@ import {
   Alert,
 } from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import Toast from 'react-native-toast-message';
 import {Input} from '../components/Input';
 import {Button} from '../components/Button';
 import {submitPetDetails, fetchRandomDogImage} from '../api/petService';

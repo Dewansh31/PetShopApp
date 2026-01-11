@@ -6,7 +6,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import Toast from 'react-native-toast-message';
 import {PetCard} from '../components/PetCard';
 import {usePetStore} from '../store/petStore';
 import {useCartStore} from '../store/cartStore';
