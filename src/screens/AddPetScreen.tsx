@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { Input } from '../components/Input';
@@ -33,18 +35,64 @@ export const AddPetScreen = ({ navigation }: any) => {
 
   const addPet = usePetStore(state => state.addPet);
 
+  const requestCameraPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'Camera Permission',
+            message: 'Pet Shop needs access to your camera to take photos',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        return granted === PermissionsAndroid.RESULTS.GRANTED;
+      } catch (err) {
+        console.warn(err);
+        return false;
+      }
+    }
+    return true; // iOS permissions are handled by Info.plist
+  };
+
+  const handleCameraLaunch = async () => {
+    const hasPermission = await requestCameraPermission();
+    if (!hasPermission) {
+      Alert.alert(
+        'Permission Denied',
+        'Camera permission is required to take photos',
+      );
+      return;
+    }
+
+    launchCamera(
+      {
+        mediaType: 'photo',
+        quality: 0.7,
+        saveToPhotos: false,
+        cameraType: 'back',
+      },
+      response => {
+        if (response.didCancel) {
+          console.log('User cancelled camera');
+        } else if (response.errorCode) {
+          console.log('Camera Error: ', response.errorMessage);
+          Alert.alert('Error', response.errorMessage || 'Failed to open camera');
+        } else if (response.assets && response.assets[0].uri) {
+          setFormData({ ...formData, image: response.assets[0].uri });
+          setErrors({ ...errors, image: '' });
+        }
+      },
+    );
+  };
+
   const handleImagePicker = () => {
     Alert.alert('Select Image', 'Choose an option', [
       {
         text: 'Camera',
-        onPress: () => {
-          launchCamera({ mediaType: 'photo', quality: 0.7 }, response => {
-            if (response.assets && response.assets[0].uri) {
-              setFormData({ ...formData, image: response.assets[0].uri });
-              setErrors({ ...errors, image: '' });
-            }
-          });
-        },
+        onPress: handleCameraLaunch,
       },
       {
         text: 'Gallery',
