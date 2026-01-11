@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {CartItem as CartItemType} from '../types';
+import Colors from '../utils/colors';
 
 interface CartItemProps {
   item: CartItemType;
@@ -36,12 +37,12 @@ export const CartItem: React.FC<CartItemProps> = ({item, onRemove}) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    backgroundColor: '#FFF',
+    backgroundColor: Colors.surface,
     padding: 12,
     borderRadius: 12,
     marginBottom: 12,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: Colors.shadow,
     shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.1,
     shadowRadius: 2,
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 8,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Colors.cardAlt,
   },
   details: {
     flex: 1,
@@ -60,12 +61,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
+    color: Colors.textPrimary,
     marginBottom: 4,
   },
   breed: {
     fontSize: 13,
-    color: '#666',
+    color: Colors.textSecondary,
     marginBottom: 4,
   },
   priceRow: {
@@ -75,11 +76,11 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6C63FF',
+    color: Colors.primary,
   },
   quantity: {
     fontSize: 13,
-    color: '#999',
+    color: Colors.textMuted,
     marginLeft: 8,
   },
   rightSection: {
@@ -89,16 +90,16 @@ const styles = StyleSheet.create({
   totalPrice: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#333',
+    color: Colors.textPrimary,
   },
   removeButton: {
-    backgroundColor: '#FF4757',
+    backgroundColor: Colors.error,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,
   },
   removeText: {
-    color: '#FFF',
+    color: Colors.textInverse,
     fontSize: 12,
     fontWeight: '600',
   },

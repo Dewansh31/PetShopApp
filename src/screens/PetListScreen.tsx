@@ -11,6 +11,7 @@ import {usePetStore} from '../store/petStore';
 import {useCartStore} from '../store/cartStore';
 import {Pet} from '../types';
 import { showToast } from '../utils/Toast';
+import Colors from '../utils/colors';
 
 export const PetListScreen = ({navigation}: any) => {
   const pets = usePetStore(state => state.pets);
@@ -77,16 +78,16 @@ export const PetListScreen = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9F9F9',
+    backgroundColor: Colors.background,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#FFF',
+    backgroundColor: Colors.surface,
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: Colors.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#333',
+    color: Colors.textPrimary,
   },
   cartButton: {
     position: 'relative',
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -8,
     right: -8,
-    backgroundColor: '#FF4757',
+    backgroundColor: Colors.error,
     borderRadius: 10,
     minWidth: 20,
     height: 20,
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   badgeText: {
-    color: '#FFF',
+    color: Colors.textInverse,
     fontSize: 12,
     fontWeight: '700',
   },
@@ -136,12 +137,12 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#333',
+    color: Colors.textPrimary,
     marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#999',
+    color: Colors.textMuted,
   },
   fab: {
     position: 'absolute',
@@ -150,17 +151,17 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#6C63FF',
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 4,
-    shadowColor: '#000',
+    shadowColor: Colors.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   fabText: {
-    color: '#FFF',
+    color: Colors.textInverse,
     fontSize: 32,
     fontWeight: '300',
   },

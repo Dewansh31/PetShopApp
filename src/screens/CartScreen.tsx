@@ -4,6 +4,7 @@ import {CartItem} from '../components/CartItem';
 import {Button} from '../components/Button';
 import {useCartStore} from '../store/cartStore';
 import { showToast } from '../utils/Toast';
+import Colors from '../utils/colors';
 
 export const CartScreen = () => {
   const items = useCartStore(state => state.items);
@@ -66,7 +67,7 @@ export const CartScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9F9F9',
+    backgroundColor: Colors.background,
   },
   listContent: {
     padding: 16,
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F9F9F9',
+    backgroundColor: Colors.background,
   },
   emptyIcon: {
     fontSize: 64,
@@ -84,20 +85,20 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#333',
+    color: Colors.textPrimary,
     marginBottom: 8,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#999',
+    color: Colors.textMuted,
   },
   footer: {
-    backgroundColor: '#FFF',
+    backgroundColor: Colors.surface,
     padding: 20,
     borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
+    borderTopColor: Colors.border,
     elevation: 4,
-    shadowColor: '#000',
+    shadowColor: Colors.shadow,
     shadowOffset: {width: 0, height: -2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -111,12 +112,12 @@ const styles = StyleSheet.create({
   totalLabel: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#333',
+    color: Colors.textPrimary,
   },
   totalPrice: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#6C63FF',
+    color: Colors.primary,
   },
   clearButton: {
     width: '100%',

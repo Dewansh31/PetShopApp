@@ -16,6 +16,7 @@ import {petFormSchema} from '../utils/validation';
 import {usePetStore} from '../store/petStore';
 import {Pet} from '../types';
 import { showToast } from '../utils/Toast';
+import Colors from '../utils/colors';
 
 export const AddPetScreen = ({navigation}: any) => {
   const [formData, setFormData] = useState({
@@ -186,7 +187,7 @@ export const AddPetScreen = ({navigation}: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F9F9F9',
+    backgroundColor: Colors.background,
   },
   content: {
     padding: 20,
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#333',
+    color: Colors.textPrimary,
     marginBottom: 24,
   },
   imageSection: {
@@ -204,17 +205,17 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     borderRadius: 16,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Colors.cardAlt,
   },
   imagePlaceholder: {
     width: '100%',
     height: 200,
     borderRadius: 16,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Colors.cardAlt,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: '#E0E0E0',
+    borderColor: Colors.border,
     borderStyle: 'dashed',
   },
   imagePlaceholderText: {
@@ -222,14 +223,14 @@ const styles = StyleSheet.create({
   },
   imagePlaceholderSubtext: {
     fontSize: 14,
-    color: '#999',
+    color: Colors.textMuted,
     marginTop: 8,
   },
   randomButton: {
     marginTop: 12,
   },
   errorText: {
-    color: '#FF4757',
+    color: Colors.error,
     fontSize: 12,
     marginTop: 4,
   },

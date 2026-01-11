@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {PetListScreen} from '../screens/PetListScreen';
 import {AddPetScreen} from '../screens/AddPetScreen';
 import {CartScreen} from '../screens/CartScreen';
+import Colors from '../utils/colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,9 +14,9 @@ export const AppNavigator = () => {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#6C63FF',
+            backgroundColor: Colors.primary,
           },
-          headerTintColor: '#FFF',
+          headerTintColor: Colors.textInverse,
           headerTitleStyle: {
             fontWeight: '700',
           },

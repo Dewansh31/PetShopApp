@@ -7,6 +7,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import Colors from '../utils/colors';
 
 interface ButtonProps {
   title: string;
@@ -39,7 +40,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       activeOpacity={0.7}>
       {loading ? (
-        <ActivityIndicator color="#fff" />
+        <ActivityIndicator color={Colors.textInverse} />
       ) : (
         <Text style={styles.buttonText}>{title}</Text>
       )}
@@ -55,26 +56,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 2,
-    shadowColor: '#000',
+    shadowColor: Colors.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
   primary: {
-    backgroundColor: '#6C63FF',
+    backgroundColor: Colors.buttonPrimary,
   },
   secondary: {
-    backgroundColor: '#FF6B9D',
+    backgroundColor: Colors.buttonSecondary,
   },
   danger: {
-    backgroundColor: '#FF4757',
+    backgroundColor: Colors.buttonDanger,
   },
   disabled: {
-    backgroundColor: '#CCCCCC',
+    backgroundColor: Colors.buttonDisabled,
     elevation: 0,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: Colors.textInverse,
     fontSize: 16,
     fontWeight: '600',
   },

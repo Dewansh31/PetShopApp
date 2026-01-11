@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {Pet} from '../types';
+import Colors from '../utils/colors';
 
 interface PetCardProps {
   pet: Pet;
@@ -53,11 +54,11 @@ export const PetCard: React.FC<PetCardProps> = ({pet, onAddToCart, isInCart = fa
 const styles = StyleSheet.create({
   card: {
     width: CARD_WIDTH,
-    backgroundColor: '#FFF',
+    backgroundColor: Colors.surface,
     borderRadius: 16,
     marginBottom: 16,
     elevation: 3,
-    shadowColor: '#000',
+    shadowColor: Colors.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     height: 140,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Colors.cardAlt,
   },
   content: {
     padding: 12,
@@ -75,12 +76,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#333',
+    color: Colors.textPrimary,
     marginBottom: 4,
   },
   breed: {
     fontSize: 13,
-    color: '#666',
+    color: Colors.textSecondary,
     marginBottom: 8,
   },
   footer: {
@@ -90,15 +91,15 @@ const styles = StyleSheet.create({
   },
   age: {
     fontSize: 12,
-    color: '#999',
+    color: Colors.textMuted,
   },
   price: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#6C63FF',
+    color: Colors.primary,
   },
   addButton: {
-    backgroundColor: '#6C63FF',
+    backgroundColor: Colors.primary,
     width: 36,
     height: 36,
     borderRadius: 18,
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   addButtonText: {
-    color: '#FFF',
+    color: Colors.textInverse,
     fontSize: 20,
     fontWeight: '600',
   },
@@ -114,14 +115,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.success,
     borderRadius: 20,
     width: 32,
     height: 32,
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 4,
-    shadowColor: '#000',
+    shadowColor: Colors.shadow,
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 3,
