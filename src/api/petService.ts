@@ -19,7 +19,7 @@ export const submitPetDetails = async (petData: any) => {
 export const fetchRandomDogImage = async () => {
   try {
     const response = await axios.get(DOG_API_URL);
-    return response.data.message;
+    return response?.data?.message;
   } catch (error) {
     throw new Error('Failed to fetch dog image');
   }

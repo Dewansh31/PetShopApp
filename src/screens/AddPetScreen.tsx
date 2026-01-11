@@ -57,6 +57,11 @@ export const AddPetScreen = ({ navigation }: any) => {
           });
         },
       },
+      {
+        text: 'Get a Random Dog Image',
+        onPress: handleFetchRandomImage,
+      },
+
       { text: 'Cancel', style: 'cancel' },
     ]);
   };
@@ -142,13 +147,6 @@ export const AddPetScreen = ({ navigation }: any) => {
             )}
             {errors.image && <Text style={styles.errorText}>{errors.image}</Text>}
 
-            <Button
-              title="Fetch Random Dog"
-              onPress={handleFetchRandomImage}
-              loading={fetchingImage}
-              variant="secondary"
-              style={styles.randomButton}
-            />
           </View>
 
           <Input

@@ -1,6 +1,6 @@
 const Colors = {
   /* Brand */
-  primary: '#6C63FF',        // Primary purple
+  primary: '#f9ad08ff',        // Primary purple
   secondary: '#FF6B9D',      // Pink
   accent: '#FFC107',         // Highlight / CTA
   
