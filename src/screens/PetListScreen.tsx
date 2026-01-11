@@ -65,8 +65,7 @@ export const PetListScreen = ({navigation}: any) => {
             />
           )}
           keyExtractor={item => item.id}
-          numColumns={2}
-          columnWrapperStyle={styles.row}
+          numColumns={1}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator={false}
         />

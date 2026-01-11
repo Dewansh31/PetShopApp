@@ -16,7 +16,7 @@ const Colors = {
   cardAlt: '#F5F5F5',        // Alternative card background
 
   /* Text */
-  textPrimary: '#333',
+  textPrimary: '#04105eff',
   textSecondary: '#666',
   textMuted: '#999',
   textInverse: '#FFFFFF',
@@ -35,7 +35,7 @@ const Colors = {
   placeholder: '#999',
 
   /* Buttons */
-  buttonPrimary: '#6C63FF',
+  buttonPrimary: '#f9ad08ff',
   buttonSecondary: '#FF6B9D',
   buttonDisabled: '#CCCCCC',
   buttonDanger: '#FF4757',
